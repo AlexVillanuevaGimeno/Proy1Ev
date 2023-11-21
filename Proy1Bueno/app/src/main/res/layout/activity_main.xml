@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ropa_bg"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/my_primary"
+        android:alpha="0.6"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="28dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VINTED"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="48sp"
+            android:textColor="@color/white"/>
+
+        <RelativeLayout
+            android:layout_width="395dp"
+            android:layout_height="482dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ropa2" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/venta" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:id="@+id/btnIndex"
+                    android:layout_height="60dp"
+                    android:text="Login"
+                    app:cornerRadius="32dp"
+                    android:layout_marginTop="24dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Si no tienes cuenta\n registrate aquí"
+            android:textStyle="italic"
+            android:textColor="@color/white"
+            />
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
