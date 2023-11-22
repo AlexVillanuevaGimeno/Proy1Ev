@@ -52,7 +52,7 @@ public class LstProducts extends AppCompatActivity implements ContractLstProduct
         presenter.lstProducts(product);
         btnAddProduct = findViewById(R.id.btnAddProduct);
         btnLogout = findViewById(R.id.btnLogout);
-        //click en Add Products
+//        click en Add Products
         btnAddProduct.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddProduct.class);
             startActivity(intent);
@@ -86,23 +86,24 @@ public class LstProducts extends AppCompatActivity implements ContractLstProduct
             LinearLayout linearLayout = new LinearLayout(this);
             LinearLayout.LayoutParams parametrosLayout = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, // Ancho ocupando el 100%
-                    ViewGroup.LayoutParams.MATCH_PARENT  // Altura ajustada a match_parent
+                    ViewGroup.LayoutParams.WRAP_CONTENT  // Altura ajustada a Wrap-content
             );
 
             parametrosLayout.setMargins(0,dpToPx(5),0,0);
             linearLayout.setLayoutParams(parametrosLayout);
             linearLayout.setId(View.generateViewId());
-            linearLayout.setGravity(Gravity.BOTTOM);
+//            linearLayout.setGravity(Gravity.TOP);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
-            linearLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
+            linearLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.my_primary));
             TextView textView = new TextView(this);
             textView.setId(View.generateViewId());
             textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(40)));
-            textView.setBackgroundColor(ContextCompat.getColor(this, R.color.black));
+            textView.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
             textView.setGravity(Gravity.CENTER_VERTICAL);
-            textView.setTextColor(ContextCompat.getColor(this, R.color.white));
-            textView.setText(product.getNombreProducto() + product.getMarcaProducto() + "\n" + product.getPrecioProducto());
+            textView.setTextColor(ContextCompat.getColor(this, R.color.black));
+            textView.setText(product.getNombreProducto() + " " + product.getMarcaProducto() + "\n" + product.getPrecioProducto() +"€");
             linearLayout.addView(textView);
+            Log.e("listaPRODUCCTOS","LSIADO: " + product.getNombreProducto() + product.getMarcaProducto() + "\n" + product.getPrecioProducto() + "€");
             parentEl.addView(linearLayout);
         }
         }
