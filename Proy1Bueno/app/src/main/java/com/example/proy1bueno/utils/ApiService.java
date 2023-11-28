@@ -1,8 +1,12 @@
 package com.example.proy1bueno.utils;
 
 import com.example.proy1bueno.addProduct.data.DataProductAdd;
+import com.example.proy1bueno.categoriesFilter.data.DataCategoriesFilter;
 import com.example.proy1bueno.listProductsUser.data.DataProductLst;
-import com.example.proy1bueno.login_user.data.DataUser;
+import com.example.proy1bueno.loginUser.data.DataUser;
+import com.example.proy1bueno.lstBetterRates.data.DataLstBetterRates;
+import com.example.proy1bueno.rate.data.DataRate;
+import com.example.proy1bueno.userFilter.data.DataUserFilter;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -37,23 +41,39 @@ public interface ApiService {
                                             @Query("idUser") int idUser
     );
 
+    /*
+    le paso el cation (USER.FILTER) + el tipo de filtro que quiero
+    pt.3 filtro por mayor numero de ventas.
+    filter= userMostSells
+     */
+    @GET("MyServlet")
+    Call<DataUserFilter> getUserFilter(@Query("ACTION")String action, @Query("FILTER") String filter);
+
+//    @GET("MyServlet")
+//    Call<DataRate> getAddValoracion(@Query("ACTION")String action);
+    @GET("MyServlet")
+    Call<DataRate> getAddValoracionComplete(@Query("ACTION")String action,
+                                            @Query("idUser")int idUser,
+                                            @Query("idProducto")int idProducto,
+                                            @Query("numEstrellas")float numEstrellas);
+
+    @GET("MyServlet")
+    Call<DataLstBetterRates>getLstBetterRates(@Query("ACTION")String action, @Query("FILTER")String filter);
+
+
+    @GET("MyServlet")
+    Call<DataCategoriesFilter>getCategories(@Query("ACTION")String action, @Query("nombreCategoria")String categoria);
+//    @GET("MyServlet")
+//    Call<DataListUsers> getDataListUsers(@Query("ACTION") String action);
+//
+//    @GET("MyServlet")
+//    Call<DataListUsers> getDataListUsers(@Query("ACTION") String action, @Query("FILTER") String filter);
+
 
 //    @GET("MyServlet")
 //    Call<DataMovies> getDataMovies(@Query("ACTION") String action);
 
 //    @GET("MyServlet")
 //    Call<DataMovies> getDataMovies2(@Query("ACTION") String action);
-
-        /*
-        @GET("MyServlet")
-          Call<MyData> getMyData(@Query("id") String id);
-
-        @GET("MyServlet/{id}")
-        Call<MyData> getMyDataURL(@Path("id") String id);*/
-
-        /*
-        @FormUrlEncoded
-        @POST("/login")
-        Call<ApiResponse> login(@Field("username") String username, @Field("password") String password);
-    */
+    
 }

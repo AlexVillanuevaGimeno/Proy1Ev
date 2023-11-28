@@ -21,12 +21,14 @@ public class LstProductPresenter extends AppCompatActivity implements ContractLs
     }
     @Override
     public void lstProducts(Product product) {
+
         model.lstAPI(product, this);
     }
 
 
     @Override
     public void onFinished(ArrayList<Product> lstProducts) {
+
         view.successLstProduct(lstProducts);
     }
 

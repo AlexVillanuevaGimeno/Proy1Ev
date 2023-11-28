@@ -2,6 +2,7 @@
 
 import action.ActionProduct;
 import action.ActionUser;
+import action.ActionValoracion;
 //import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
@@ -37,6 +38,11 @@ public class MyServlet  extends HttpServlet {
                 System.out.println("answer User Myservlet: " + answer);
                 break;
 
+            case "RATE":
+                answer = new ActionValoracion().execute(request, response);
+                System.out.println("answer Valoracion Myservlet: " + answer);
+                break;
+
             default:
                 System.out.print("default servlet");
                 answer = "default servlet";
@@ -44,7 +50,7 @@ public class MyServlet  extends HttpServlet {
         }
 
         out.print(answer);
-        System.out.println(answer);
+//        System.out.println(answer);
     }
 }
 

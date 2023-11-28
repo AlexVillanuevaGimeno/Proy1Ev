@@ -18,6 +18,15 @@ public class DAOProduct {
             "Marca_Producto, Fecha_Subida_Producto, Descripcion_Producto, Imagen_Producto, Id_Usuario)  VALUES ";
     private final String SQL_FINDALL = "SELECT * FROM " + tableName + " WHERE 1=1";
 
+    private final String SQL_FILTRO_CATEGORIAS = "SELECT Producto.*, GROUP_CONCAT(Categoria.Nombre_Categoria) AS Categorias, Usuario.Nombre_Usuario\n" +
+            "FROM Producto\n" +
+            "JOIN Producto_Categoria ON Producto.Id_Producto = Producto_Categoria.Id_Producto\n" +
+            "JOIN Categoria ON Producto_Categoria.Id_Categoria = Categoria.Id_Categoria\n" +
+            "JOIN Usuario ON Producto.Id_Usuario = Usuario.Id_Usuario\n" +
+            "WHERE ";
+
+
+
     public DAOProduct(){
         motorSQL = MotorSQL.getMotorSQL();
     }
@@ -35,7 +44,6 @@ public class DAOProduct {
         motorSQL.close();
         return "";
     }
-
     public ArrayList<Product> findAll(Product product){
         String sql = "";
         sql = SQL_FINDALL;
@@ -87,4 +95,64 @@ public class DAOProduct {
         return lstProducts;
     }
 
+/*
+public String toStringCategoria() {
+        return "Product{" +
+                "idProducto=" + idProducto +
+                ", nombreProducto='" + nombreProducto + '\'' +
+                ", precioProducto=" + precioProducto +
+                ", marcaProducto='" + marcaProducto + '\'' +
+                ", idCategoria=" + idCategoria +
+                ", nombreCategoria='" + nombreCategoria + '\'' +
+                '}';
+    }
+ */
+    public ArrayList<Product>ProductsCategory(Product product){
+        ArrayList<Product> lstProducts = new ArrayList<>();
+        String sql = "";
+        sql = SQL_FILTRO_CATEGORIAS;
+//        sql += "Categoria.Nombre_Categoria = '" + product.getNombreCategoria() +
+//                "' GROUP BY Producto.Id_Producto;";
+        if (product.getNombreCategoria() != null && !product.getNombreCategoria().equals("")){
+            String[] categoriesProduct = product.getNombreCategoria().split("\\.");
+            sql += "Nombre_Categoria IN (";
+            for (int i = 0; i < categoriesProduct.length; i++) {
+               sql += "'" + categoriesProduct[i] + "', ";
+            }
+            sql = sql.substring(0, sql.length()-2);
+            sql += ")";
+
+//
+            System.out.println("SALGO DEL IF FILTRADO CATEGORIAS\nCON ESTA SQL= " + sql);
+        }else{
+            sql += "1=1";
+        }
+
+        sql += " GROUP BY producto.Id_Producto;";
+
+        System.out.println("SQL EN DAO PRODUCT CATEGORY \n" + sql);
+        motorSQL.connect();
+        ResultSet resultSet = motorSQL.executeQuery(sql);
+        try {
+            while(resultSet.next()){
+                Product productAux = new Product();
+                productAux.setIdProducto(resultSet.getInt(1));
+                productAux.setNombreProducto(resultSet.getString(2));
+                productAux.setPrecioProducto(resultSet.getDouble(3));
+                productAux.setMarcaProducto(resultSet.getString(4));
+                productAux.setNombreCategoria(resultSet.getString(9));
+                productAux.setVendedor(resultSet.getString(10));
+                System.out.println("Estoy en DAOProduct en ProductCategory");
+                System.out.println("product = " + productAux.toStringCategoria());
+                lstProducts.add(productAux);
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        motorSQL.close();
+        System.out.println("SALGO DAO FILTRO CATEGORIA \n" + lstProducts);
+        return lstProducts;
+    }
 }
+

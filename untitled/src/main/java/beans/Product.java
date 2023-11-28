@@ -13,6 +13,11 @@ public class Product {
     private String imagenProducto;
     private int idUser;
 
+    private String vendedor;
+
+    private int idCategoria;
+    private String nombreCategoria;
+
     public Product() {
     }
 
@@ -29,6 +34,16 @@ public class Product {
         this.imagenProducto = imagenProducto;
         this.idUser = idUser;
     }
+    public Product(int idProducto, String nombreProducto, Double precioProducto,
+                   String marcaProducto, String nombreCategoria, String vendedor) {
+        this.idProducto = idProducto;
+        this.nombreProducto = nombreProducto;
+        this.precioProducto = precioProducto;
+        this.marcaProducto = marcaProducto;
+        this.nombreCategoria = nombreCategoria;
+        this.vendedor = vendedor;
+    }
+
 
     // Getters y setters
     public int getIdProducto() {
@@ -90,9 +105,32 @@ public class Product {
     public int getIdUser() {
         return idUser;
     }
-
     public void setIdUser(int idUser) {
         this.idUser = idUser;
+    }
+
+    public String getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(String vendedor) {
+        this.vendedor = vendedor;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
     }
 
     @Override
@@ -106,6 +144,17 @@ public class Product {
                 ", descripcionProducto='" + descripcionProducto + '\'' +
                 ", imagenProducto='" + imagenProducto + '\'' +
                 ", idUser=" + idUser +
+                '}';
+    }
+
+    public String toStringCategoria() {
+        return "Product{" +
+                "idProducto=" + idProducto +
+                ", nombreProducto='" + nombreProducto + '\'' +
+                ", precioProducto=" + precioProducto +
+                ", marcaProducto='" + marcaProducto + '\'' +
+                ", idCategoria=" + idCategoria +
+                ", nombreCategoria='" + nombreCategoria + '\'' +
                 '}';
     }
 }

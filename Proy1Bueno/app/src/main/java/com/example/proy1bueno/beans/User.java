@@ -4,12 +4,14 @@ public class User {
     private int idUser;
     private String username;
     private String password; // Puedes agregar otros campos segÃºn tus necesidades
+    private int venta;
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
     public User() {
+        this.setVenta(0);
     }
 
     public int getIdUser() {
@@ -34,6 +36,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getVenta() {
+        return venta;
+    }
+
+    public void setVenta(int venta) {
+        this.venta = venta;
     }
 
     @Override

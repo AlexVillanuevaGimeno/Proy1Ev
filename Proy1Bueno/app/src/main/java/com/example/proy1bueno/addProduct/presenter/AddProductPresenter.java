@@ -4,7 +4,7 @@ import com.example.proy1bueno.addProduct.ContractAddProduct;
 import com.example.proy1bueno.addProduct.model.AddProductModel;
 import com.example.proy1bueno.beans.Product;
 
-public class            AddProductPresenter implements ContractAddProduct.Presenter, ContractAddProduct.Model.OnAddProductListener{
+public class AddProductPresenter implements ContractAddProduct.Presenter, ContractAddProduct.Model.OnAddProductListener{
     private ContractAddProduct.View view;
     private ContractAddProduct.Model model;
 

@@ -36,6 +36,10 @@ public class ActionProduct {
                 answer = listarProductos(request,response);
                 System.out.println("Answer listar Action= " + answer);
                 break;
+            case"FILTER":
+                System.out.println("Action: Filtro?");
+                answer = filtro(request,response);
+                System.out.println("Answer filtro Action= " + answer);
             default:
                 System.out.println("default Action");
                 break;
@@ -148,5 +152,45 @@ public class ActionProduct {
         System.out.println("(Action Method) Producto Add: " + product.toString());
         daoProduct.add(product);
         return "";
+    }
+
+    private String filtro(HttpServletRequest request, HttpServletResponse response){
+        String jsonProducts = "";
+        Product product = new Product();
+        ArrayList<Product> lstProducts = new ArrayList<>();
+
+//        if (request.getParameter("idProducto") != null){
+//            product.setIdProducto(Integer.parseInt(request.getParameter("idProducto")));
+//        }
+//        if (request.getParameter("idCategoria")!=null){
+//            product.setIdCategoria(Integer.parseInt(request.getParameter("idCategoria")));
+//        }
+//        if (request.getParameter("nombreCategoria")!=null){
+            System.out.println("CATEGORIA NO ES NULO ES= " + product.getNombreCategoria());
+            product.setNombreCategoria(request.getParameter("nombreCategoria"));
+//        }
+
+
+        /*
+        FUMADITA...
+        SI HAY TIEMPO REVISAR PARA HACERLO CON METHOD
+         */
+//        String method = request.getParameter("FILTER");
+//        System.out.println("Que parametro le paso?"+request.getParameter("FILTER"));
+//        if (method.equals("categoria")){
+//
+//        }
+        lstProducts = new DAOProduct().ProductsCategory(product);
+        System.out.println("lstProducts al volver del DAO= " + lstProducts.size());
+        Gson gson = new Gson();
+        jsonProducts += "{\"message\": \"Esto es un mensaje de prueba\",\"lstProducts\": [";
+
+        for (Product productAux:lstProducts) {
+            jsonProducts += gson.toJson(productAux) + ", ";
+        }
+        jsonProducts = jsonProducts.substring(0, jsonProducts.length()-2);
+        jsonProducts += "]}";
+        System.out.println("JSON EN ACTION FILTRO CATEGORIAS "+jsonProducts);
+        return jsonProducts;
     }
 }
