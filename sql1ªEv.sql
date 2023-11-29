@@ -65,6 +65,30 @@ CREATE TABLE Venta (
     FOREIGN KEY (Id_Direccion_Cliente) REFERENCES Direccion_Cliente(Id_Direccion_Cliente)
 );
 
+CREATE TABLE Compra (
+    Id_Compra INT PRIMARY KEY AUTO_INCREMENT,
+    Fecha_Compra DATE,
+    Hora_Compra TIME,
+    Id_Usuario INT,
+    Id_Producto INT,
+    Id_Direccion_Vendedor INT,
+    FOREIGN KEY (Id_Usuario) REFERENCES Usuario(Id_Usuario),
+    FOREIGN KEY (Id_Producto) REFERENCES Producto(Id_Producto),
+    FOREIGN KEY (Id_Direccion_Vendedor) REFERENCES Direccion_Vendedor(Id_Direccion_Vendedor)
+);
+
+CREATE TABLE Direccion_Vendedor (
+    Id_Direccion_Vendedor INT PRIMARY KEY AUTO_INCREMENT,
+    Id_Usuario INT,
+    Pais VARCHAR(50),
+    Provincia VARCHAR(50),
+    Ciudad VARCHAR(50),
+    CP VARCHAR(10),
+    Portal INT,
+    FOREIGN KEY (Id_Usuario) REFERENCES Usuario(Id_Usuario)
+);
+
+
 CREATE TABLE Valoracion (
     Id_Valoracion INT PRIMARY KEY AUTO_INCREMENT,
     Id_Usuario INT,
