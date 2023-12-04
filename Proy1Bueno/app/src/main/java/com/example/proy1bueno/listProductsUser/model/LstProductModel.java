@@ -42,12 +42,6 @@ public class LstProductModel extends AppCompatActivity implements ContractLstPro
 //        Log.e("Apiservice","Apiservice" + apiService);
         sharedPreferencesUserCFG = context.getSharedPreferences("com.MyApp.USER_CFG", Context.MODE_PRIVATE);
         Call<DataProductLst> call;
-//        if (sharedPreferencesUserCFG.getInt("id",0) == 0){
-//            call = apiService.getDataProductList("PRODUCT.FILTER");
-//        }else{
-//            call = apiService.getDataProductList("PRODUCT.FILTER", sharedPreferencesUserCFG.getInt("id",0));
-//        }
-
         call = apiService.getDataProductList("PRODUCT.LST",sharedPreferencesUserCFG.getInt("idUser",0));
         Log.e("call","call" + call.toString());
         call.enqueue(new Callback<DataProductLst>() {

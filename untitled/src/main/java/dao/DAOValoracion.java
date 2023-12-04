@@ -44,18 +44,19 @@ LIMIT 10;
 
      */
     private final String SQLLstBetterRates = "SELECT " +
-                    " p.Id_Producto, " +
-                    " p.Nombre_Producto, " +
-                    " AVG(v.Estrellas) AS PromedioValoracion " +
-                    " FROM " +
-                    " Producto p " +
-                    " JOIN " +
-                    " Valoracion v ON p.Id_Producto = v.Id_Producto " +
-                    "GROUP BY " +
-                    " p.Id_Producto, p.Nombre_Producto " +
-                    " ORDER BY " +
-                    " PromedioValoracion DESC " +
-                    " LIMIT 10;";
+            "p.Id_Producto, " +
+            "p.Nombre_Producto, " +
+            "p.Imagen_Producto, " +
+            "AVG(v.Estrellas) AS PromedioValoracion " +
+            "FROM " +
+            "Producto p " +
+            "JOIN " +
+            "Valoracion v ON p.Id_Producto = v.Id_Producto " +
+            "GROUP BY " +
+            "p.Id_Producto, p.Nombre_Producto, p.Imagen_Producto " +
+            "ORDER BY " +
+            "PromedioValoracion DESC " +
+            "LIMIT 10;";
 
     public DAOValoracion() {motorSQL = MotorSQL.getMotorSQL();}
 
@@ -89,7 +90,8 @@ LIMIT 10;
                 Valoracion valoracionAux = new Valoracion();
                 valoracionAux.setIdProduct(resultSet.getInt(1));
                 valoracionAux.setNombreProducto(resultSet.getString(2));
-                valoracionAux.setPromedioValoracion(resultSet.getDouble(3));
+                valoracionAux.setImagenProducto(resultSet.getString(3));
+                valoracionAux.setPromedioValoracion(resultSet.getDouble(4));
                 System.out.println("Estoy en DAOuser en userMostSells");
                 System.out.println("usuario = " + valoracionAux.toStringValoracion());
                 lstValoraciones.add(valoracionAux);

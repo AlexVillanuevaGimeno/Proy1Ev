@@ -25,6 +25,14 @@ public class DAOProduct {
             "JOIN Usuario ON Producto.Id_Usuario = Usuario.Id_Usuario\n" +
             "WHERE ";
 
+    private final String SQL_FICHA_TECNICA =
+            "SELECT P.Imagen_Producto, P.Nombre_Producto, P.Precio_Producto, " +
+            "U.Nombre_Usuario AS Vendedor, P.Marca_Producto, AVG(V.Estrellas) AS Valoracion_Media, " +
+            "P.Descripcion_Producto " +
+            "FROM Producto AS P " +
+            "JOIN Usuario AS U ON P.Id_Usuario = U.Id_Usuario " +
+            "LEFT JOIN Valoracion AS V ON P.Id_Producto = V.Id_Producto " +
+            "WHERE P.Id_Producto = ";
 
 
     public DAOProduct(){
@@ -140,10 +148,11 @@ public String toStringCategoria() {
                 productAux.setNombreProducto(resultSet.getString(2));
                 productAux.setPrecioProducto(resultSet.getDouble(3));
                 productAux.setMarcaProducto(resultSet.getString(4));
+                productAux.setImagenProducto(resultSet.getString(7));
                 productAux.setNombreCategoria(resultSet.getString(9));
                 productAux.setVendedor(resultSet.getString(10));
                 System.out.println("Estoy en DAOProduct en ProductCategory");
-                System.out.println("product = " + productAux.toStringCategoria());
+                System.out.println("product = " + productAux.toString());
                 lstProducts.add(productAux);
 
             }
@@ -154,5 +163,37 @@ public String toStringCategoria() {
         System.out.println("SALGO DAO FILTRO CATEGORIA \n" + lstProducts);
         return lstProducts;
     }
+
+public ArrayList<Product> fichaProduct(Product product){
+    String sql =SQL_FICHA_TECNICA;
+    ArrayList<Product> lstProducts = new ArrayList<>();
+    sql +=  product.getIdProducto() ;
+    System.out.println("SQL EN DAO PRODUCT FICHA PRODUCT \n" + sql);
+    motorSQL.connect();
+    ResultSet resultSet = motorSQL.executeQuery(sql);
+    try {
+        while(resultSet.next()){
+            Product productAux = new Product();
+            productAux.setImagenProducto(resultSet.getString(1));
+            productAux.setNombreProducto(resultSet.getString(2));
+            productAux.setPrecioProducto(resultSet.getDouble(3));
+            productAux.setVendedor(resultSet.getString(4));
+            productAux.setMarcaProducto(resultSet.getString(5));
+            productAux.setNumEstrellas(resultSet.getFloat(6));
+            productAux.setDescripcionProducto(resultSet.getString(7));
+            System.out.println("Estoy en DAOProduct en ProductCategory");
+            System.out.println("product = " + productAux.toString());
+            lstProducts.add(productAux);
+
+        }
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+    motorSQL.close();
+    System.out.println("SALGO DAO  FICHA PRODUCTO \n" + lstProducts);
+    return lstProducts;
+}
+
+
 }
 

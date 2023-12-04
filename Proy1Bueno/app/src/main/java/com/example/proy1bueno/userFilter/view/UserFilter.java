@@ -1,33 +1,28 @@
 package com.example.proy1bueno.userFilter.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.example.proy1bueno.MainActivity;
 import com.example.proy1bueno.R;
 
 import com.example.proy1bueno.adapters.PopularUsersAdapter;
-import com.example.proy1bueno.adapters.ProductAdapter;
 import com.example.proy1bueno.beans.User;
+import com.example.proy1bueno.categoriesFilter.view.Categories;
+import com.example.proy1bueno.historicalPurchases.view.HistoricalPurchases;
+import com.example.proy1bueno.listProductsUser.view.LstProducts;
+import com.example.proy1bueno.lstBetterRates.view.LstBetterRates;
 import com.example.proy1bueno.userFilter.ContractUserFilter;
 import com.example.proy1bueno.userFilter.presenter.UserFilterPresenter;
 
 import java.util.ArrayList;
 
 public class UserFilter extends AppCompatActivity implements ContractUserFilter.View{
-    private ImageButton btnHome;
+
     RecyclerView recyclerView;
 
 
@@ -45,17 +40,42 @@ public class UserFilter extends AppCompatActivity implements ContractUserFilter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_filter);
         userFilter = this;
+        ImageButton btnHomeFooter = findViewById(R.id.btnHomeFooter);
+        ImageButton btnBetterRates = findViewById(R.id.btnBetterRates);
+        ImageButton btnProfile = findViewById(R.id.btnProfile);
+        ImageButton btnMostSells = findViewById(R.id.btnMostSells);
+        ImageButton btnBuys = findViewById(R.id.btnBuys);
+        btnHomeFooter.setOnClickListener(v -> volverHome());
+        btnBetterRates.setOnClickListener(v -> abrirValoraciones());
+        btnProfile.setOnClickListener(v -> abrirMisProductos());
+        btnMostSells.setOnClickListener(v -> abrirUsuarioVentas());
+        btnBuys.setOnClickListener(v -> abrirHistoricoCompras());
         initComponents();
 
+    }
+    private void volverHome(){
+        Intent intent = new Intent(this, Categories.class);
+        startActivity(intent);
+    }
+    private void abrirValoraciones(){
+        Intent intent = new Intent(this, LstBetterRates.class);
+        startActivity(intent);
+    }
+    private void abrirUsuarioVentas(){
+        Intent intent = new Intent(this, UserFilter.class);
+        startActivity(intent);
+    }
+    private void abrirHistoricoCompras(){
+        Intent intent = new Intent(this, HistoricalPurchases.class);
+        startActivity(intent);
+    }
+    private void abrirMisProductos(){
+        Intent intent = new Intent(this, LstProducts.class);
+        startActivity(intent);
     }
 
     private void initComponents() {
         User user = new User();
-        btnHome = findViewById(R.id.btnHome);
-        btnHome.setOnClickListener(view -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        });
         presenter.userFilter(user);
     }
 

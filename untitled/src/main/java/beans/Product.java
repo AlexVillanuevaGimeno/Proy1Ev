@@ -17,6 +17,15 @@ public class Product {
 
     private int idCategoria;
     private String nombreCategoria;
+    private float numEstrellas;
+
+    public float getNumEstrellas() {
+        return numEstrellas;
+    }
+
+    public void setNumEstrellas(float numEstrellas) {
+        this.numEstrellas = numEstrellas;
+    }
 
     public Product() {
     }
@@ -140,21 +149,14 @@ public class Product {
                 ", nombreProducto='" + nombreProducto + '\'' +
                 ", precioProducto=" + precioProducto +
                 ", marcaProducto='" + marcaProducto + '\'' +
-                ", fechaSubidaProducto=" + fechaSubidaProducto +
+                ", fechaSubidaProducto='" + fechaSubidaProducto + '\'' +
                 ", descripcionProducto='" + descripcionProducto + '\'' +
                 ", imagenProducto='" + imagenProducto + '\'' +
                 ", idUser=" + idUser +
-                '}';
-    }
-
-    public String toStringCategoria() {
-        return "Product{" +
-                "idProducto=" + idProducto +
-                ", nombreProducto='" + nombreProducto + '\'' +
-                ", precioProducto=" + precioProducto +
-                ", marcaProducto='" + marcaProducto + '\'' +
+                ", vendedor='" + vendedor + '\'' +
                 ", idCategoria=" + idCategoria +
                 ", nombreCategoria='" + nombreCategoria + '\'' +
+                ", numEstrellas=" + numEstrellas +
                 '}';
     }
 }

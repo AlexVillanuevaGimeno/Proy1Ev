@@ -11,7 +11,7 @@ public interface ContractProductFile {
 
     public interface Model{
         void productFileAPI(Product product,
-                                 ContractProductFile.Model.OnProductFileListener onProductFileListenerListener);
+                                 ContractProductFile.Model.OnProductFileListener onProductFileListener);
 
         interface OnProductFileListener {
             void onFinished(Product product);

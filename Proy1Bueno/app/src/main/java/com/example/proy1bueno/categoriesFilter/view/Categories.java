@@ -1,6 +1,7 @@
 package com.example.proy1bueno.categoriesFilter.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,13 +11,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-import com.example.proy1bueno.MainActivity;
 import com.example.proy1bueno.R;
 import com.example.proy1bueno.adapters.ProductAdapter;
 import com.example.proy1bueno.beans.Product;
 import com.example.proy1bueno.categoriesFilter.ContractCategoriesFilter;
 import com.example.proy1bueno.categoriesFilter.presenter.CategoriesFilterPresenter;
+import com.example.proy1bueno.historicalPurchases.view.HistoricalPurchases;
+import com.example.proy1bueno.listProductsUser.view.LstProducts;
+import com.example.proy1bueno.lstBetterRates.view.LstBetterRates;
+import com.example.proy1bueno.userFilter.view.UserFilter;
 
 import java.util.ArrayList;
 
@@ -27,7 +32,8 @@ public class Categories extends AppCompatActivity implements ContractCategoriesF
     Button btnMujer;
     Button btnCamisetas;
     Button btnPantalones;
-    ImageButton btnHome;
+    private SearchView searchView;
+    ProductAdapter adapterProduct;
 
     //boton para limpriar los filtros a la vez
 //    Button btnClear;
@@ -58,7 +64,45 @@ public class Categories extends AppCompatActivity implements ContractCategoriesF
         setContentView(R.layout.activity_categories);
 //        categoriesActivity=this;
         sharedPreferences = getSharedPreferences("com.MyApp.PRODUCTS",MODE_PRIVATE);
+        searchView = findViewById(R.id.searchView);
+        searchView.clearFocus();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
+        ImageButton btnHomeFooter = findViewById(R.id.btnHomeFooter);
+        ImageButton btnBetterRates = findViewById(R.id.btnBetterRates);
+        ImageButton btnProfile = findViewById(R.id.btnProfile);
+        ImageButton btnMostSells = findViewById(R.id.btnMostSells);
+        ImageButton btnBuys = findViewById(R.id.btnBuys);
+        btnHomeFooter.setOnClickListener(v -> volverHome());
+        btnBetterRates.setOnClickListener(v -> abrirValoraciones());
+        btnProfile.setOnClickListener(v -> abrirMisProductos());
+        btnMostSells.setOnClickListener(v -> abrirUsuarioVentas());
+        btnBuys.setOnClickListener(v -> abrirHistoricoCompras());
         initComponents();
+    }
+
+    private void filterList(String text) {
+        ArrayList<Product>RecyclerLstProductsFiltered = new ArrayList<>();
+        for (Product product: lstProducts) {
+            if(product.getNombreProducto().toLowerCase().contains(text.toLowerCase())){
+                RecyclerLstProductsFiltered.add(product);
+            }
+        }
+    if (RecyclerLstProductsFiltered.isEmpty()){
+        Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+    }else{
+        adapterProduct.setRecyclerLstProductsFiltered(RecyclerLstProductsFiltered);
+        }
     }
 
     private void initComponents(){
@@ -70,11 +114,6 @@ public class Categories extends AppCompatActivity implements ContractCategoriesF
         btnMujer = findViewById(R.id.btnMujer);
         btnCamisetas = findViewById(R.id.btnCamisetas);
         btnPantalones = findViewById(R.id.btnPantalones);
-        btnHome = findViewById(R.id.btnHome);
-        btnHome.setOnClickListener(view -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        });
 
         //onClick compruebo si el filtro ya estaba añadido
         //en caso deque lo este al clicar otra vez lo elimino
@@ -127,13 +166,34 @@ public class Categories extends AppCompatActivity implements ContractCategoriesF
         presenter.categoriesFilter(product);
     }
 
+    private void volverHome(){
+        Intent intent = new Intent(this, Categories.class);
+        startActivity(intent);
+    }
+    private void abrirValoraciones(){
+        Intent intent = new Intent(this, LstBetterRates.class);
+        startActivity(intent);
+    }
+    private void abrirUsuarioVentas(){
+        Intent intent = new Intent(this, UserFilter.class);
+        startActivity(intent);
+    }
+    private void abrirHistoricoCompras(){
+        Intent intent = new Intent(this, HistoricalPurchases.class);
+        startActivity(intent);
+    }
+    private void abrirMisProductos(){
+        Intent intent = new Intent(this, LstProducts.class);
+        startActivity(intent);
+    }
+
     @Override
     public void succesCategoriesFilter(ArrayList<Product> lstProducts) {
         this.lstProducts = lstProducts;
         Log.e("SUCCES CATEGORIES FILTER","HE LLEGADO AL SUCCES DEL FILTRO CON ESTOS DATOS= " +
                 lstProducts + "\n Longuitud de la cadena" + lstProducts.size());
         recyclerView = findViewById(R.id.columnaListado);
-        ProductAdapter adapterProduct = new ProductAdapter(lstProducts);
+        adapterProduct = new ProductAdapter(lstProducts);
         recyclerView.setAdapter(adapterProduct);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }

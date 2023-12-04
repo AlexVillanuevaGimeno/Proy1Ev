@@ -1,8 +1,11 @@
 package com.example.proy1bueno.loginUser.view;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -10,11 +13,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.proy1bueno.R;
 import com.example.proy1bueno.beans.User;
 import com.example.proy1bueno.categoriesFilter.view.Categories;
-import com.example.proy1bueno.listProductsUser.view.LstProducts;
 import com.example.proy1bueno.loginUser.ContractLoginUser;
 import com.example.proy1bueno.loginUser.presenter.LoginUserPresenter;
 
@@ -40,6 +44,15 @@ public class LoginUser extends AppCompatActivity implements ContractLoginUser.Vi
         mainActivity = this;
         initComponents();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            if (ContextCompat.checkSelfPermission(LoginUser.this,
+                    Manifest.permission.POST_NOTIFICATIONS)!=
+                    PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(LoginUser.this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},101);
+            }
+        }
+
     }
     private boolean LogCheck(){
         return userPreferences.getBoolean("LogCheck", false);
@@ -64,7 +77,7 @@ public class LoginUser extends AppCompatActivity implements ContractLoginUser.Vi
                 datosUser += "idUser: " + userPreferences.getInt("idUser",0) + "}";
 //                        Toast.makeText(this, DataUser, Toast.LENGTH_SHORT).show();
                 Log.e("success", "LogCheck returned true");
-                Intent intent = new Intent(this, LstProducts.class);
+                Intent intent = new Intent(this, Categories.class);
                 startActivity(intent);
             }
         });
@@ -82,7 +95,7 @@ public class LoginUser extends AppCompatActivity implements ContractLoginUser.Vi
 
         //DEBERIA ENTRAR AQUI PARA PODER FILTRAR
 //       Intent intent = new Intent(this, Categories.class);
-        Intent intent = new Intent(this, LstProducts.class);
+        Intent intent = new Intent(this, Categories.class);
                startActivity(intent);
     }
 

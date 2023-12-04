@@ -47,7 +47,7 @@ public class Rate extends AppCompatActivity implements ContractRate.View {
         UserPreferences = getSharedPreferences("com.MyApp.USER_CFG", Context.MODE_PRIVATE);
         idUser = UserPreferences.getInt("idUser",0);
         Log.e("user_id","id user preferences = " + idUser);
-        idProductRate = getIntent().getIntExtra("idProducto",0);
+        idProductRate = getIntent().getIntExtra("idProduct",0);
         Log.e("idProduct","id producto ratear = " + idProductRate);
         ratingBar = findViewById(R.id.ratingBar);
 //        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

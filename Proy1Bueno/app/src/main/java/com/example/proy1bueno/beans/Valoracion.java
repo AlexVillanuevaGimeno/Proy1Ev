@@ -6,10 +6,19 @@ public class Valoracion {
     private int idProduct;
     private String nombreProducto;
 
+    private String imagenProducto;
     private float numEstrellas;
     private double promedioValoracion;
 
     private String resena;
+
+    public String getImagenProducto() {
+        return imagenProducto;
+    }
+
+    public void setImagenProducto(String imagenProducto) {
+        this.imagenProducto = imagenProducto;
+    }
 
     public Valoracion() {
     }

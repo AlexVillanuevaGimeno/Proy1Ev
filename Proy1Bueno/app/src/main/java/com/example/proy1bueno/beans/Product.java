@@ -13,6 +13,16 @@ public class Product {
     private String descripcionProducto;
     private String imagenProducto;
     private int idUser;
+    private String vendedor;
+
+    public String getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(String vendedor) {
+        this.vendedor = vendedor;
+    }
+
     private String Category;
     private ArrayList<String> lstCategories;
     private void addCategory(String category){

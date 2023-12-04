@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.proy1bueno.R;
 import com.example.proy1bueno.beans.Product;
-import com.example.proy1bueno.rate.view.Rate;
+import com.example.proy1bueno.productFile.view.ProductFile;
+
 
 import java.util.ArrayList;
 
@@ -36,12 +39,14 @@ public class ProductPerUserAdapter extends RecyclerView.Adapter<ProductPerUserAd
     public void onBindViewHolder(@NonNull ProductPerUserAdapter.ProductPerUserViewHolder holder, int position) {
         holder.nombreProduct.setText(lstProduct.get(position).getNombreProducto());
         holder.marcaProduct.setText(lstProduct.get(position).getMarcaProducto());
-        holder.descripcion.setText(lstProduct.get(position).getDescripcionProducto());
-//        holder.imageView.setImageResource();
+//        holder.descripcion.setText(lstProduct.get(position).getDescripcionProducto());
+        String imageUrl = "http://192.168.1.132:8088/untitled/img/"+lstProduct.get(position).getImagenProducto();
+        Glide.with(context).load(imageUrl).into(holder.imageView);
+
         holder.itemView.setOnClickListener(v -> {
             Product product = lstProduct.get(position);
             int idProduct = product.getIdProducto();
-            Intent intent = new Intent(holder.itemView.getContext(), Rate.class);
+            Intent intent = new Intent(holder.itemView.getContext(), ProductFile.class);
             intent.putExtra("idProduct", idProduct);
             context.startActivity(intent);
         });
@@ -55,12 +60,14 @@ public class ProductPerUserAdapter extends RecyclerView.Adapter<ProductPerUserAd
     public class ProductPerUserViewHolder extends RecyclerView.ViewHolder{
         TextView nombreProduct;
         TextView marcaProduct;
-        TextView descripcion;
+//        TextView descripcion;
+        ImageView imageView;
         public ProductPerUserViewHolder(@NonNull View itemView) {
             super(itemView);
             nombreProduct = itemView.findViewById(R.id.nombreAdapter);
             marcaProduct = itemView.findViewById(R.id.marcaAdapter);
-            descripcion = itemView.findViewById(R.id.descripcionAdapter);
+//            descripcion = itemView.findViewById(R.id.descripcionAdapter);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 }

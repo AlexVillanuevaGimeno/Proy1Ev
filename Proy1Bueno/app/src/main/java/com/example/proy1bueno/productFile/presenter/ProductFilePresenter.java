@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.proy1bueno.beans.Product;
 
 import com.example.proy1bueno.productFile.ContractProductFile;
+import com.example.proy1bueno.productFile.model.ProductFileModel;
+import com.example.proy1bueno.productFile.view.ProductFile;
 
 public class ProductFilePresenter extends AppCompatActivity implements ContractProductFile.Presenter, ContractProductFile.Model.OnProductFileListener{
     private ContractProductFile.View view;
@@ -14,7 +16,7 @@ public class ProductFilePresenter extends AppCompatActivity implements ContractP
 
     public ProductFilePresenter(ContractProductFile.View view) {
         this.view = view;
-//        model = new LstProductModel(this, (Context) this.view);
+        model = new ProductFileModel(this, (Context) this.view);
     }
 
     @Override

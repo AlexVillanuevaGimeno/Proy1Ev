@@ -1,5 +1,6 @@
 
 
+import action.ActionCompra;
 import action.ActionProduct;
 import action.ActionUser;
 import action.ActionValoracion;
@@ -31,13 +32,15 @@ public class MyServlet  extends HttpServlet {
             case "PRODUCT":
                     answer = new ActionProduct().execute(request, response);
                     System.out.println("answer Product Myservlet: " + answer);
-
                 break;
             case "USER":
                 answer = new ActionUser().execute(request, response);
                 System.out.println("answer User Myservlet: " + answer);
                 break;
-
+            case "COMPRA":
+                answer= new ActionCompra().execute(request,response);
+                System.out.println("answer Compra MyServlet" + answer);
+                break;
             case "RATE":
                 answer = new ActionValoracion().execute(request, response);
                 System.out.println("answer Valoracion Myservlet: " + answer);

@@ -12,8 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.proy1bueno.R;
 import com.example.proy1bueno.beans.Product;
+import com.example.proy1bueno.productFile.view.ProductFile;
 import com.example.proy1bueno.rate.view.Rate;
 
 import java.util.ArrayList;
@@ -26,8 +28,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     Context context;
 
 
+
     public ProductAdapter(ArrayList<Product> lstProduct) {
         this.lstProduct = lstProduct;
+    }
+
+    public void setRecyclerLstProductsFiltered(ArrayList<Product>RecyclerLstProductsFiltered){
+        this.lstProduct =RecyclerLstProductsFiltered;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -40,14 +48,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ProductViewHolder holder, int position) {
+
         holder.nombreProduct.setText(lstProduct.get(position).getNombreProducto());
         holder.marcaProduct.setText(lstProduct.get(position).getMarcaProducto());
-        holder.descripcion.setText(lstProduct.get(position).getDescripcionProducto());
-//        holder.imageView.setImageResource();
+//        holder.descripcion.setText(lstProduct.get(position).getDescripcionProducto());
+        String imageUrl = "http://192.168.1.132:8088/untitled/img/"+lstProduct.get(position).getImagenProducto();
+        Glide.with(context).load(imageUrl).into(holder.imageView);
+
         holder.itemView.setOnClickListener(v -> {
             Product product = lstProduct.get(position);
             int idProduct = product.getIdProducto();
-            Intent intent = new Intent(holder.itemView.getContext(), Rate.class);
+            Intent intent = new Intent(holder.itemView.getContext(), ProductFile.class);
             intent.putExtra("idProduct", idProduct);
             context.startActivity(intent);
         });
@@ -64,15 +75,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public class ProductViewHolder extends RecyclerView.ViewHolder{
         TextView nombreProduct;
         TextView marcaProduct;
-        TextView descripcion;
-//        ImageView imageView;
+//        TextView descripcion;
+        ImageView imageView;
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
             nombreProduct = itemView.findViewById(R.id.nombreAdapter);
             marcaProduct = itemView.findViewById(R.id.marcaAdapter);
-            descripcion = itemView.findViewById(R.id.descripcionAdapter);
-//            imageView = itemView.findViewById(R.id.imageView);
+//            descripcion = itemView.findViewById(R.id.descripcionAdapter);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 }

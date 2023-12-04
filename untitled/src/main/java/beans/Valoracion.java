@@ -5,6 +5,15 @@ public class Valoracion {
     private int idUser;
     private int idProduct;
     private String nombreProducto;
+    private String imagenProducto;
+
+    public String getImagenProducto() {
+        return imagenProducto;
+    }
+
+    public void setImagenProducto(String imagenProducto) {
+        this.imagenProducto = imagenProducto;
+    }
 
     public String getNombreProducto() {
         return nombreProducto;
